@@ -1,6 +1,6 @@
-package com.boardProject.backend.domain.auth;
+package com.board.backend.domain.auth;
 
-import com.boardProject.backend.domain.user.User;
+import com.board.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
