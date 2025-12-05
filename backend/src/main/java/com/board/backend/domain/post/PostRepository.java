@@ -1,4 +1,4 @@
-package com.boardProject.backend.domain.post;
+package com.board.backend.domain.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

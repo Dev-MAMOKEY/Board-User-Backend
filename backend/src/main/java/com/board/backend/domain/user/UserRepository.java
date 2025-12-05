@@ -1,4 +1,4 @@
-package com.boardProject.backend.domain.user;
+package com.board.backend.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;

@@ -1,7 +1,7 @@
-package com.boardProject.backend.domain.user;
+package com.board.backend.domain.user;
 
-import com.boardProject.backend.domain.auth.RefreshToken;
-import com.boardProject.backend.domain.post.Post;
+import com.board.backend.domain.auth.RefreshToken;
+import com.board.backend.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "`user`")
+@Table(name = "user")
 public class User {
 
     @Id

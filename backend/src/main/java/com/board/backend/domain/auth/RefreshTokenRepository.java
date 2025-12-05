@@ -1,4 +1,4 @@
-package com.boardProject.backend.domain.auth;
+package com.board.backend.domain.auth;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
