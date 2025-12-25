@@ -12,3 +12,34 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${db931f9644d55471d2305268eaff46bb}
+            client-secret: ${d0b66MrL5vcttnoSRx2fZyLdNZKdocH5}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: Kakao
+            client-authentication-method: client_secret_post
+            scope:
+              - profile_nickname
+              - account_email
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+jwt:
+  secret: "미르가_직접_만든_엄청_긴_비밀키_아무도모르게_적기"
+  access-expiration: 3600000      # 1시간 (ms)
+  refresh-expiration: 604800000    # 7일 (ms)
+
+app:
+  oauth2:
+    redirect-uri: http://localhost:3000/oauth/callback
