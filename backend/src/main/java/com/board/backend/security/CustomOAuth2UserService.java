@@ -21,36 +21,38 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        // 1) OAuth2로부터 사용자 정보 가져오기
+        // 1) OAuth2 기본 정보 가져오기
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        // 2) 카카오 사용자 정보 추출
+        // 2) 카카오 attributes
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        Long kakaoId = (Long) attributes.get("id");
+
+        // 3) kakao id 안전하게 추출
+        Object idObj = attributes.get("id");
+        Long kakaoId = Long.valueOf(String.valueOf(idObj));
+
         String snsId = "kakao_" + kakaoId;
 
-        // 3) 카카오 계정 정보 추출
+        // 4) 이메일 추출 (옵션)
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        final String email;
-        if (kakaoAccount != null && kakaoAccount.containsKey("email")) {
-            email = (String) kakaoAccount.get("email");
-        } else {
-            email = null;
-        }
+        String email = kakaoAccount != null ? (String) kakaoAccount.get("email") : null;
 
-        // 4) DB에서 기존 사용자 조회 또는 신규 생성
+        // 5) DB 조회 or 신규 생성
         User user = userRepository.findBySnsId(snsId)
-                .orElseGet(() -> {
-                    User newUser = User.builder()
-                            .snsId(snsId)
-                            .email(email)
-                            .provider(Provider.KAKAO)
-                            .role(Role.USER)
-                            .build();
-                    return userRepository.save(newUser);
-                });
+                .orElseGet(() -> userRepository.save(
+                        User.builder()
+                                .snsId(snsId)
+                                .email(email)
+                                .provider(Provider.KAKAO)
+                                .role(Role.USER)
+                                .build()
+                ));
 
-        // 5) Custom OAuth2User 반환 (userId를 포함)
-        return new CustomOAuth2User(user.getId(), user.getRole().name(), attributes);
+        // 6) CustomOAuth2User 반환
+        return new CustomOAuth2User(
+                user.getId(),
+                user.getRole().name(),
+                attributes
+        );
     }
 }

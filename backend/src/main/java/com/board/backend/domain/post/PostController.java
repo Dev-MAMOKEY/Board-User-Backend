@@ -1,7 +1,7 @@
-package com.board.backend.web;
+package com.board.backend.domain.post;
 
-import com.board.backend.domain.post.PostService;
 import com.board.backend.domain.post.dto.*;
+import com.board.backend.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +16,8 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping
-    public Long create(
-            @RequestHeader("X-USER-ID") Long userId,
-            @RequestBody PostCreateRequest request
-    ) {
+    public Long create(@RequestBody PostCreateRequest request) {
+        Long userId = SecurityUtil.getCurrentUserId(); // JWT에서 가져옴
         return postService.create(userId, request);
     }
 
@@ -38,19 +36,17 @@ public class PostController {
     // 수정
     @PutMapping("/{postId}")
     public void update(
-            @RequestHeader("X-USER-ID") Long userId,
             @PathVariable Long postId,
             @RequestBody PostUpdateRequest request
     ) {
+        Long userId = SecurityUtil.getCurrentUserId();
         postService.update(postId, userId, request);
     }
 
     // 삭제
     @DeleteMapping("/{postId}")
-    public void delete(
-            @RequestHeader("X-USER-ID") Long userId,
-            @PathVariable Long postId
-    ) {
+    public void delete(@PathVariable Long postId) {
+        Long userId = SecurityUtil.getCurrentUserId();
         postService.delete(postId, userId);
     }
 }

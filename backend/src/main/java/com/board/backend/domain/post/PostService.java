@@ -22,7 +22,7 @@ public class PostService {
     public Long create(Long userId, PostCreateRequest request) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("로그인된 사용자 정보가 없습니다."));
 
         Post post = new Post(
                 request.getTitle(),

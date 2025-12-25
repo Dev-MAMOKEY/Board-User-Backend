@@ -5,6 +5,7 @@ import com.board.backend.domain.auth.RefreshTokenRepository;
 import com.board.backend.domain.user.User;
 import com.board.backend.domain.user.UserRepository;
 import com.board.backend.security.jwt.JwtUtil;
+import com.board.backend.security.CustomOAuth2User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,16 +40,16 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             Authentication authentication
     ) throws IOException, ServletException {
 
-        // 1) CustomOAuth2User에서 userId, role 추출
+        // 1) Principal(CustomOAuth2User) 추출
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         Long userId = oAuth2User.getUserId();
         String role = oAuth2User.getRole();
 
-        // 2) Access Token & Refresh Token 생성
+        // 2) JWT 생성
         String accessToken = jwtUtil.generateAccessToken(userId, role);
-        String refreshToken = jwtUtil.generateRefreshToken(userId, role);
+        String refreshToken = jwtUtil.generateRefreshToken(userId);
 
-        // 3) Refresh Token DB에 저장
+        // 3) Refresh Token DB 저장
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("User not found"));
 
@@ -61,7 +62,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         refreshTokenRepository.save(refreshTokenEntity);
 
-        // 4) 프론트엔드로 리다이렉트 (쿼리 파라미터에 토큰 전달)
+        // 4) 프론트로 redirect (쿼리 파라미터로 전달)
         String targetUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .queryParam("accessToken", accessToken)
                 .queryParam("refreshToken", refreshToken)

@@ -14,9 +14,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
 
-    private final Long userId;
-    private final String role;
-    private final Map<String, Object> attributes;
+    private final Long userId;                    // DB 유저 PK
+    private final String role;                    // USER / ADMIN
+    private final Map<String, Object> attributes; // Kakao에서 받은 raw attributes
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -30,6 +30,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return String.valueOf(userId);
+        // Security 내부 UID → 카카오 고유 id or userId 모두 가능
+        return userId.toString();
     }
 }

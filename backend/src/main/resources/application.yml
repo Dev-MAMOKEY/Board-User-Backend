@@ -18,9 +18,9 @@ spring:
       client:
         registration:
           kakao:
-            client-id: ${db931f9644d55471d2305268eaff46bb}
-            client-secret: ${d0b66MrL5vcttnoSRx2fZyLdNZKdocH5}
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-id: "db931f9644d55471d2305268eaff46bb"
+            client-secret: "d0b66MrL5vcttnoSRx2fZyLdNZKdocH5"
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-name: Kakao
             client-authentication-method: client_secret_post
@@ -36,7 +36,7 @@ spring:
             user-name-attribute: id
 
 jwt:
-  secret: "미르가_직접_만든_엄청_긴_비밀키_아무도모르게_적기"
+  secret: "fj93jf92j3fo2j3of23o2j3ofj203jfoj2039jf203jfo3jf2309jf2j3ofj23jfo23"
   access-expiration: 3600000      # 1시간 (ms)
   refresh-expiration: 604800000    # 7일 (ms)
 
