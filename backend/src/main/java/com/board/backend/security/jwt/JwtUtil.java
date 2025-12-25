@@ -49,6 +49,7 @@ public class JwtUtil {
                 .setSubject(String.valueOf(userId))
                 .setIssuedAt(now)
                 .setExpiration(expire)
+                .setId(java.util.UUID.randomUUID().toString())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }

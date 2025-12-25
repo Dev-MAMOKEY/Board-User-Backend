@@ -42,4 +42,4 @@ jwt:
 
 app:
   oauth2:
-    redirect-uri: http://localhost:3000/oauth/callback
+    redirect-uri: "http://localhost:8080/test/oauth/success"

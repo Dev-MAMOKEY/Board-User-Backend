@@ -89,7 +89,7 @@ public class OAuthService {
         return (String) response.get("access_token");
     }
 
-    private Map<String, Object> getKakaoUserInfo(String kakaoAccessToken) {
+    public Map<String, Object> getKakaoUserInfo(String kakaoAccessToken) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
