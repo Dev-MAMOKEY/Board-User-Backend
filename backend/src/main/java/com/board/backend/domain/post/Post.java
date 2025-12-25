@@ -23,7 +23,7 @@ public class Post {
     private String title;
 
     @Lob // Large Object 긴 문자열에 사용
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Column(nullable = false, updatable = false)
