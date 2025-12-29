@@ -45,8 +45,7 @@ public class SecurityConfig {
                                 "/oauth2/authorization/**",
                                 "/test/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/posts", "/posts/*").permitAll()  // GET 게시글 조회만 인증 불필요
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated()  // 게시글 조회 포함 모든 엔드포인트 인증 필수
                 )
 
                 // 인증/인가 예외 처리 (REST API용)
